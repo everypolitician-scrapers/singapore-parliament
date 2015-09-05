@@ -1,0 +1,62 @@
+#!/bin/env ruby
+# encoding: utf-8
+
+require 'scraperwiki'
+require 'nokogiri'
+require 'open-uri/cached'
+OpenURI::Cache.cache_path = '.cache'
+
+class String
+  def tidy
+    self.gsub(/[[:space:]]+/, ' ').strip
+  end
+end
+
+def noko_for(url)
+  Nokogiri::HTML(open(url).read)
+end
+
+def scrape_list(url)
+  noko = noko_for(url)
+  noko.css('#tbl-container li a/@href').each do |href|
+    link = URI.join url, href
+    scrape_term(link)
+  end
+end
+
+def scrape_term(url)
+  noko = noko_for(url)
+
+  # Term info
+  dates = noko.css('#session_date')
+  term_name = dates.xpath('../text()').text.tidy
+  term = { 
+    id: term_name[/^(\d+)/, 1],
+    name: term_name,
+    source: url.to_s,
+  }
+  term[:start_date], term[:end_date] = dates.text.split(/\s+-\s+/, 2).map { |str| str.split('.').reverse.join("-") }
+  warn term[:name]
+  ScraperWiki.save_sqlite([:id], term, 'terms')
+
+
+  # Members
+  noko.css('table.views-table').xpath('.//tr[td]').each do |tr|
+    tds = tr.css('td')
+    first_seen = tds[4].text.tidy[/^(\d+)/]
+    name, notes = tds[1].text.split('(', 2).map(&:tidy)
+    data = { 
+      id: "%s-%s" % [name.downcase.gsub(/[[:space:]]+/,'-'), first_seen],
+      name: name,
+      party: tds[2].text.tidy,
+      image: tds[1].css('img/@src').text,
+      term: term[:id],
+      notes: notes,
+      source: url.to_s,
+    }
+    data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
+    ScraperWiki.save_sqlite([:id, :term], data)
+  end
+end
+
+scrape_list('http://www.parliament.gov.sg/history/1st-parliament')
