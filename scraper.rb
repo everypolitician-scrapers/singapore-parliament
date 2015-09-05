@@ -48,7 +48,7 @@ def scrape_term(url)
     data = { 
       id: "%s-%s" % [name.downcase.gsub(/[[:space:]]+/,'-'), first_seen],
       name: name,
-      party: tds[2].text.tidy,
+      party: tds[2].text.tidy.tr("'","’"), # Standardise; source has both
       image: tds[1].css('img/@src').text,
       term: term[:id],
       notes: notes,
