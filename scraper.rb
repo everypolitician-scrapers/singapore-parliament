@@ -1,8 +1,11 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-require 'scraperwiki'
+require 'date'
 require 'nokogiri'
+require 'pry'
+require 'scraperwiki'
+
 require 'open-uri/cached'
 OpenURI::Cache.cache_path = '.cache'
 
@@ -10,6 +13,10 @@ class String
   def tidy
     self.gsub(/[[:space:]]+/, ' ').strip
   end
+end
+
+def date_from(str)
+  Date.parse(str).to_s rescue ''
 end
 
 def noko_for(url)
@@ -55,6 +62,8 @@ def scrape_term(url)
       source: url.to_s,
     }
     data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
+    data[:end_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'Resigned on '
+    data[:start_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'NMP term effective '
     ScraperWiki.save_sqlite([:id, :term], data)
   end
 end
