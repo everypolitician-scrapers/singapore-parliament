@@ -42,7 +42,7 @@ def scrape_term(url)
     name: term_name,
     source: url.to_s,
   }
-  term[:start_date], term[:end_date] = dates.text.split(/\s+-\s+/, 2).map { |str| str.split('.').reverse.join("-") }
+  term[:start_date], term[:end_date] = dates.text.split(/\s+-\s*/, 2).map { |str| str.split('.').reverse.join("-") }
   warn term[:name]
   ScraperWiki.save_sqlite([:id], term, 'terms')
 
