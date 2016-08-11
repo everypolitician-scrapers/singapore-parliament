@@ -7,8 +7,8 @@ require 'pry'
 require 'scraperwiki'
 require 'scraped_page_archive/open-uri'
 
-require 'open-uri/cached'
-OpenURI::Cache.cache_path = '.cache'
+# require 'open-uri/cached'
+# OpenURI::Cache.cache_path = '.cache'
 
 class String
   def tidy
@@ -65,6 +65,18 @@ def scrape_term(url)
     data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
     data[:end_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'Resigned on '
     data[:start_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'NMP term effective '
+
+    # The start dates of NPMs are removed after the MP takes their seat.
+    # That is, we once had these start dates but now we haven't.
+    # Since the official source no longer publishes these dates,
+    # we're hardcoding them into the scraper.
+    term_13_nmps = %w(azmoon-bin-ahmad-13 ganesh-rajaram-13 k-thanaletchimi-13 
+      mahdev-mohan-13 randolph-tan-12 kuik-shiao-yin-12 chia-yong-yong-12 kok-heng-leun-13)
+    if term[:id] == '13' && term_13_nmps.include?(data[:id])
+      data[:start_date] = '2016-03-22'
+      data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
+    end
+
     ScraperWiki.save_sqlite([:id, :term], data)
   end
 end
