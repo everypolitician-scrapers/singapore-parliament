@@ -64,9 +64,7 @@ def scrape_term(url)
     }
     data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
     data[:end_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'Resigned on '
-    data[:end_date] ||= term[:end_date]
     data[:start_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'NMP term effective '
-    data[:start_date] ||= term[:start_date]
 
     # The start dates of NPMs are removed after the MP takes their seat.
     # That is, we once had these start dates but now we haven't.
