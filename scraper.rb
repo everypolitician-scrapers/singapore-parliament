@@ -73,7 +73,8 @@ def scrape_term(url)
     term_13_nmps = %w(azmoon-bin-ahmad-13 ganesh-rajaram-13 k-thanaletchimi-13 
       mahdev-mohan-13 randolph-tan-12 kuik-shiao-yin-12 chia-yong-yong-12 kok-heng-leun-13)
     if term[:id] == '13' && term_13_nmps.include?(data[:id])
-      data[:start_date] = '2016-03-22' 
+      data[:start_date] = '2016-03-22'
+      data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
     end
 
     ScraperWiki.save_sqlite([:id, :term], data)
