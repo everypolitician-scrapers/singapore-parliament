@@ -70,20 +70,10 @@ def scrape_term(url)
     # That is, we once had these start dates but now we haven't.
     # Since the official source no longer publishes these dates,
     # we're hardcoding them into the scraper.
-
-    ids_of_term_13_nmps = [
-      'azmoon-bin-ahmad-13',
-      'ganesh-rajaram-13',
-      'k-thanaletchimi-13',
-      'mahdev-mohan-13',
-      'randolph-tan-12',
-      'kuik-shiao-yin-12',
-      'chia-yong-yong-12',
-      'kok-heng-leun-13'
-    ]
-
-    if data[:term] == '13' && ids_of_term_13_nmps.include?(data[:id])
-      data[:start_date] = date_from('22 March 2016')
+    term_13_nmps = %w(azmoon-bin-ahmad-13 ganesh-rajaram-13 k-thanaletchimi-13 
+      mahdev-mohan-13 randolph-tan-12 kuik-shiao-yin-12 chia-yong-yong-12 kok-heng-leun-13)
+    if term[:id] == '13' && term_13_nmps.include?(data[:id])
+      data[:start_date] = '2016-03-22' 
     end
 
     ScraperWiki.save_sqlite([:id, :term], data)
