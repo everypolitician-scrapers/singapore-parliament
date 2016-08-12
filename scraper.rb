@@ -71,7 +71,7 @@ def scrape_term(url)
     # Since the official source no longer publishes these dates,
     # we're hardcoding them into the scraper.
     term_13_nmps = %w(
-      azmoon-bin-ahmad-13
+      azmoon-ahmad-13
       chia-yong-yong-12
       ganesh-rajaram-13
       k-thanaletchimi-13
