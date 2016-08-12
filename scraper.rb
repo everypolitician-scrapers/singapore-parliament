@@ -79,6 +79,7 @@ def scrape_term(url)
       kuik-shiao-yin-12
       mahdev-mohan-13
       randolph-tan-12
+      thomas-chua-kee-seng-12
     )
     if term[:id] == '13' && term_13_nmps.include?(data[:id])
       data[:start_date] = '2016-03-22'
