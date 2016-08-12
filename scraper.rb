@@ -38,7 +38,7 @@ def scrape_term(url)
   # Term info
   dates = noko.css('#session_date')
   term_name = dates.xpath('../text()').text.tidy
-  term = { 
+  term = {
     id: term_name[/^(\d+)/, 1],
     name: term_name,
     source: url.to_s,
@@ -53,7 +53,7 @@ def scrape_term(url)
     tds = tr.css('td')
     first_seen = tds[4].text.tidy[/^(\d+)/]
     name, notes = tds[1].text.split('(', 2).map(&:tidy)
-    data = { 
+    data = {
       id: "%s-%s" % [name.downcase.gsub(/[[:space:]]+/,'-'), first_seen],
       name: name,
       party: tds[2].text.tidy.tr("'","’"), # Standardise; source has both
@@ -70,8 +70,16 @@ def scrape_term(url)
     # That is, we once had these start dates but now we haven't.
     # Since the official source no longer publishes these dates,
     # we're hardcoding them into the scraper.
-    term_13_nmps = %w(azmoon-bin-ahmad-13 ganesh-rajaram-13 k-thanaletchimi-13 
-      mahdev-mohan-13 randolph-tan-12 kuik-shiao-yin-12 chia-yong-yong-12 kok-heng-leun-13)
+    term_13_nmps = %w(
+      azmoon-bin-ahmad-13
+      chia-yong-yong-12
+      ganesh-rajaram-13
+      k-thanaletchimi-13
+      kok-heng-leun-13
+      kuik-shiao-yin-12
+      mahdev-mohan-13
+      randolph-tan-12
+    )
     if term[:id] == '13' && term_13_nmps.include?(data[:id])
       data[:start_date] = '2016-03-22'
       data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
