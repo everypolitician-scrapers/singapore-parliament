@@ -71,7 +71,7 @@ def scrape_term(url)
     # Since the official source no longer publishes these dates,
     # we're hardcoding them into the scraper.
     term_13_nmps = %w(
-      azmoon-bin-ahmad-13
+      azmoon-ahmad-13
       chia-yong-yong-12
       ganesh-rajaram-13
       k-thanaletchimi-13
@@ -79,6 +79,7 @@ def scrape_term(url)
       kuik-shiao-yin-12
       mahdev-mohan-13
       randolph-tan-12
+      thomas-chua-kee-seng-12
     )
     if term[:id] == '13' && term_13_nmps.include?(data[:id])
       data[:start_date] = '2016-03-22'
