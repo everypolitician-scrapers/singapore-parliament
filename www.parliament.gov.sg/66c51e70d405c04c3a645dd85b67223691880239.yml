@@ -22,9 +22,9 @@ response:
     Content-Language:
     - en
     Last-Modified:
-    - Tue, 20 Sep 2016 02:17:33 GMT
+    - Wed, 21 Sep 2016 16:00:32 GMT
     Etag:
-    - '"1474337853"'
+    - '"1474473632"'
     X-Generator:
     - Drupal 7 (http://drupal.org)
     X-Frame-Options:
@@ -32,16 +32,19 @@ response:
     Server:
     - ''
     Content-Length:
-    - '105688'
+    - '106458'
     Cache-Control:
     - no-cache, must-revalidate, post-check=0, pre-check=0
     Expires:
-    - Tue, 20 Sep 2016 02:17:39 GMT
+    - Wed, 21 Sep 2016 16:00:40 GMT
     Date:
-    - Tue, 20 Sep 2016 02:17:39 GMT
+    - Wed, 21 Sep 2016 16:00:40 GMT
     Connection:
     - keep-alive
+    Set-Cookie:
+    - SESSd0f07a0a313a6f12e3db8499724d0095=_5SLzRutmohjT0P8uEblKl7gfzljmpSn4nqxCHuhodY;
+      expires=Fri, 14-Oct-2016 19:33:57 GMT; path=/; domain=.parliament.gov.sg; HttpOnly
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Tue, 20 Sep 2016 02:17:39 GMT
+recorded_at: Wed, 21 Sep 2016 16:00:41 GMT
