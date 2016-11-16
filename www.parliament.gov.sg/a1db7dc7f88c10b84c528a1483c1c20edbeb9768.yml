@@ -22,26 +22,32 @@ response:
     Content-Language:
     - en
     Last-Modified:
-    - Sat, 12 Nov 2016 12:37:58 GMT
+    - Wed, 16 Nov 2016 13:21:03 GMT
     Etag:
-    - '"1478954278"'
+    - '"1479302463-1"'
+    X-Drupal-Cache:
+    - MISS
     X-Generator:
     - Drupal 7 (http://drupal.org)
     X-Frame-Options:
     - SAMEORIGIN
     Server:
     - ''
+    Vary:
+    - Accept-Encoding
+    - cookie
+    Cache-Control:
+    - public, max-age=60
+    Expires:
+    - Wed, 16 Nov 2016 13:22:14 GMT
+    Date:
+    - Wed, 16 Nov 2016 13:21:14 GMT
+    Connection:
+    - Transfer-Encoding
+    - keep-alive
     Content-Length:
     - '109923'
-    Cache-Control:
-    - no-cache, must-revalidate, post-check=0, pre-check=0
-    Expires:
-    - Sat, 12 Nov 2016 12:38:13 GMT
-    Date:
-    - Sat, 12 Nov 2016 12:38:13 GMT
-    Connection:
-    - keep-alive
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Sat, 12 Nov 2016 12:38:13 GMT
+recorded_at: Wed, 16 Nov 2016 13:21:14 GMT
