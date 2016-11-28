@@ -22,11 +22,11 @@ response:
     Content-Language:
     - en
     Last-Modified:
-    - Sun, 27 Nov 2016 21:43:51 GMT
+    - Mon, 28 Nov 2016 18:55:54 GMT
     Etag:
-    - '"1480283031-1"'
+    - '"1480359354-1"'
     X-Drupal-Cache:
-    - HIT
+    - MISS
     X-Generator:
     - Drupal 7 (http://drupal.org)
     X-Frame-Options:
@@ -39,9 +39,9 @@ response:
     Cache-Control:
     - public, max-age=60
     Expires:
-    - Sun, 27 Nov 2016 23:21:47 GMT
+    - Mon, 28 Nov 2016 18:57:01 GMT
     Date:
-    - Sun, 27 Nov 2016 23:20:47 GMT
+    - Mon, 28 Nov 2016 18:56:01 GMT
     Connection:
     - Transfer-Encoding
     - keep-alive
@@ -50,4 +50,4 @@ response:
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Sun, 27 Nov 2016 23:20:47 GMT
+recorded_at: Mon, 28 Nov 2016 18:56:02 GMT
