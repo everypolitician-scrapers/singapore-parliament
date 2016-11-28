@@ -26,7 +26,7 @@ response:
     Etag:
     - '"1480359354-1"'
     X-Drupal-Cache:
-    - MISS
+    - HIT
     X-Generator:
     - Drupal 7 (http://drupal.org)
     X-Frame-Options:
@@ -39,9 +39,9 @@ response:
     Cache-Control:
     - public, max-age=60
     Expires:
-    - Mon, 28 Nov 2016 18:57:01 GMT
+    - Mon, 28 Nov 2016 18:57:07 GMT
     Date:
-    - Mon, 28 Nov 2016 18:56:01 GMT
+    - Mon, 28 Nov 2016 18:56:07 GMT
     Connection:
     - Transfer-Encoding
     - keep-alive
@@ -50,4 +50,4 @@ response:
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Mon, 28 Nov 2016 18:56:02 GMT
+recorded_at: Mon, 28 Nov 2016 18:56:07 GMT
