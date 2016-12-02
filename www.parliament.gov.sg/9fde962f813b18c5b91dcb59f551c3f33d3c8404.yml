@@ -22,9 +22,9 @@ response:
     Content-Language:
     - en
     Last-Modified:
-    - Wed, 30 Nov 2016 06:53:18 GMT
+    - Fri, 02 Dec 2016 04:05:37 GMT
     Etag:
-    - '"1480488798-1"'
+    - '"1480651537-1"'
     X-Drupal-Cache:
     - MISS
     X-Generator:
@@ -39,15 +39,15 @@ response:
     Cache-Control:
     - public, max-age=60
     Expires:
-    - Wed, 30 Nov 2016 06:54:27 GMT
+    - Fri, 02 Dec 2016 04:06:49 GMT
     Date:
-    - Wed, 30 Nov 2016 06:53:27 GMT
+    - Fri, 02 Dec 2016 04:05:49 GMT
     Connection:
     - Transfer-Encoding
     - keep-alive
     Content-Length:
-    - '109015'
+    - '109014'
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Wed, 30 Nov 2016 06:53:27 GMT
+recorded_at: Fri, 02 Dec 2016 04:05:49 GMT
