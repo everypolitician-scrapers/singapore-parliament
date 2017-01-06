@@ -84,4 +84,5 @@ def scrape_term(url)
   end
 end
 
+ScraperWiki.sqliteexecute('DELETE FROM data') rescue nil
 scrape_list('http://www.parliament.gov.sg/history/1st-parliament')
