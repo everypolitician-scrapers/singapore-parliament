@@ -3,19 +3,13 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'nokogiri'
 require 'pry'
+require 'scraped'
 require 'scraperwiki'
-require 'scraped_page_archive/open-uri'
 
 # require 'open-uri/cached'
 # OpenURI::Cache.cache_path = '.cache'
-
-class String
-  def tidy
-    gsub(/[[:space:]]+/, ' ').strip
-  end
-end
+require 'scraped_page_archive/open-uri'
 
 def date_from(str)
   Date.parse(str).to_s rescue ''
