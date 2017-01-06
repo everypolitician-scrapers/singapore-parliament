@@ -1,5 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'date'
 require 'nokogiri'
@@ -12,7 +13,7 @@ require 'scraped_page_archive/open-uri'
 
 class String
   def tidy
-    self.gsub(/[[:space:]]+/, ' ').strip
+    gsub(/[[:space:]]+/, ' ').strip
   end
 end
 
@@ -39,14 +40,13 @@ def scrape_term(url)
   dates = noko.css('#session_date')
   term_name = dates.xpath('../text()').text.tidy
   term = {
-    id: term_name[/^(\d+)/, 1],
-    name: term_name,
+    id:     term_name[/^(\d+)/, 1],
+    name:   term_name,
     source: url.to_s,
   }
-  term[:start_date], term[:end_date] = dates.text.split(/\s+-\s*/, 2).map { |str| str.split('.').reverse.join("-") }
+  term[:start_date], term[:end_date] = dates.text.split(/\s+-\s*/, 2).map { |str| str.split('.').reverse.join('-') }
   warn term[:name]
   ScraperWiki.save_sqlite([:id], term, 'terms')
-
 
   # Members
   noko.css('table.views-table').xpath('.//tr[td]').each do |tr|
@@ -54,12 +54,12 @@ def scrape_term(url)
     first_seen = tds[4].text.tidy[/^(\d+)/]
     name, notes = tds[1].text.split('(', 2).map(&:tidy)
     data = {
-      id: "%s-%s" % [name.downcase.gsub(/[[:space:]]+/,'-'), first_seen],
-      name: name,
-      party: tds[2].text.tidy.tr("'","’"), # Standardise; source has both
-      image: tds[1].css('img/@src').text,
-      term: term[:id],
-      notes: notes,
+      id:     '%s-%s' % [name.downcase.gsub(/[[:space:]]+/, '-'), first_seen],
+      name:   name,
+      party:  tds[2].text.tidy.tr("'", '’'), # Standardise; source has both
+      image:  tds[1].css('img/@src').text,
+      term:   term[:id],
+      notes:  notes,
       source: url.to_s,
     }
     data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
@@ -86,7 +86,7 @@ def scrape_term(url)
       data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
     end
 
-    ScraperWiki.save_sqlite([:id, :term], data)
+    ScraperWiki.save_sqlite(%i(id term), data)
   end
 end
 
