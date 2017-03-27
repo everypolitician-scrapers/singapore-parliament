@@ -59,7 +59,7 @@
 <script type="text/javascript" src="http://www.parliament.gov.sg/sites/all/themes/parl7/js/custom.js?om2ibh"></script>
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"parl7","theme_token":"or-spOkOVCKVCb7BmheB7vFF9_1Y9EzBTOuSx4E2RmE","js":{"sites\/all\/themes\/parl7\/js\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"misc\/form.js":1,"sites\/all\/modules\/custom_search\/custom_search.js":1,"sites\/all\/themes\/parl7\/js\/custom.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/custom_search\/custom_search.css":1,"sites\/all\/themes\/parl7\/css\/ie7.css":1,"sites\/all\/themes\/parl7\/css\/style.css":1,"sites\/all\/themes\/parl7\/css\/new.css":1}},"custom_search":{"form_target":"_self","solr":0}});
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"parl7","theme_token":"f8q3ur25wt7og9r5J1qqPQQlDBr6ueQeIpD8mEYoEuc","js":{"sites\/all\/themes\/parl7\/js\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"misc\/form.js":1,"sites\/all\/modules\/custom_search\/custom_search.js":1,"sites\/all\/themes\/parl7\/js\/custom.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/custom_search\/custom_search.css":1,"sites\/all\/themes\/parl7\/css\/ie7.css":1,"sites\/all\/themes\/parl7\/css\/style.css":1,"sites\/all\/themes\/parl7\/css\/new.css":1}},"custom_search":{"form_target":"_self","solr":0}});
 //--><!]]>
 </script>
 </head>
@@ -93,7 +93,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
   <input onblur="if (this.value == &#039;&#039;) {this.value = &#039;Search ...&#039;;}" onfocus="if (this.value == &#039;Search ...&#039;) {this.value = &#039;&#039;;}" type="text" id="edit-search-block-form--2" name="search_block_form" value="Search ..." size="20" maxlength="128" class="form-text" />
 </div>
 <fieldset class="custom_search-popup form-wrapper" id="edit-popup"><div class="fieldset-wrapper"></div></fieldset>
-<div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Search" class="form-submit" /></div><input type="hidden" name="form_build_id" value="form-Fh11mruD_Zn1BbrUZxSQs7Nl-htT2n7qhT-WM_kB-hY" />
+<div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Search" class="form-submit" /></div><input type="hidden" name="form_build_id" value="form-TTgbbHSpof698xuHb6jaOnKKyCudqDfPWdNhLJEvwjo" />
 <input type="hidden" name="form_id" value="search_block_form" />
 <input class="default-text" type="hidden" name="default_text" value="" />
 </div>
@@ -299,7 +299,7 @@ jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":
                   <div class="region region-content">
     <div id="block-system-main" class=" region-block contextual-links-region">
 							<div class="content clearfix">
-				<div class="view view-list-of-mps-3rd-parliament view-id-list_of_mps_3rd_parliament view-display-id-page view-dom-id-2cd727c8ff49ce632e9001e10c9b2f4a">
+				<div class="view view-list-of-mps-3rd-parliament view-id-list_of_mps_3rd_parliament view-display-id-page view-dom-id-3d784d045afca98450e9d9fd79091f10">
             <div class="view-header">
       <style>
 .inner_frame {
@@ -1345,7 +1345,7 @@ text-indent: -9999px;
     <p style="color:#db1010; font-size:9px;">Last Reviewed on:
 	    	
 
-    23 Mar 2017 
+    27 Mar 2017 
 </p>
   </div>
 </div>
@@ -1369,6 +1369,25 @@ text-indent: -9999px;
 </div>
 <div class="cleared"></div>
 <script type="text/javascript">
+
+
+//note: this is a jQuery example, recode to vanilla JS if jQuery is not available on your website.
+
+$('input[type="text"]').attr('data-hj-masked','');
+
+var blockFromHotjar = ['#details','.user-info','input[type="text"]','textarea'];  
+$.each(blockFromHotjar,function(i,val){
+  $(val).attr('data-hj-masked','');
+});
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:452724,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+
 jQuery.noConflict();
 
 
