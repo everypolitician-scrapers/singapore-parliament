@@ -22,9 +22,9 @@ response:
     Content-Language:
     - en
     Last-Modified:
-    - Sat, 01 Jul 2017 06:17:40 GMT
+    - Tue, 04 Jul 2017 04:28:17 GMT
     Etag:
-    - '"1498889860"'
+    - '"1499142497"'
     X-Generator:
     - Drupal 7 (http://drupal.org)
     X-Frame-Options:
@@ -32,16 +32,16 @@ response:
     Server:
     - ''
     Content-Length:
-    - '119139'
+    - '119138'
     Cache-Control:
     - no-cache, must-revalidate, post-check=0, pre-check=0
     Expires:
-    - Sat, 01 Jul 2017 06:17:51 GMT
+    - Tue, 04 Jul 2017 04:28:24 GMT
     Date:
-    - Sat, 01 Jul 2017 06:17:51 GMT
+    - Tue, 04 Jul 2017 04:28:24 GMT
     Connection:
     - keep-alive
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Sat, 01 Jul 2017 06:17:51 GMT
+recorded_at: Tue, 04 Jul 2017 04:28:24 GMT
