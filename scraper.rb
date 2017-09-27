@@ -80,6 +80,7 @@ def scrape_term(url)
       data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
     end
 
+    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
     ScraperWiki.save_sqlite(%i[id term], data)
   end
 end
