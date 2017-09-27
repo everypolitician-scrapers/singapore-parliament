@@ -7,59 +7,139 @@ require 'pry'
 require 'scraped'
 require 'scraperwiki'
 
-# require 'open-uri/cached'
-# OpenURI::Cache.cache_path = '.cache'
-require 'scraped_page_archive/open-uri'
+require 'open-uri/cached'
+OpenURI::Cache.cache_path = '.cache'
+# require 'scraped_page_archive/open-uri'
 
-def date_from(str)
-  Date.parse(str).to_s rescue ''
-end
+class TermList < Scraped::HTML
+  decorator Scraped::Response::Decorator::CleanUrls
 
-def noko_for(url)
-  Nokogiri::HTML(open(url).read)
-end
-
-def scrape_list(url)
-  noko = noko_for(url)
-  noko.css('#tbl-container li a/@href').each do |href|
-    link = URI.join url, href
-    scrape_term(link)
+  field :term_urls do
+    noko.css('#tbl-container li a/@href').map(&:text)
   end
 end
 
-def scrape_term(url)
-  noko = noko_for(url)
+class TermPage < Scraped::HTML
+  field :id do
+    name[/^(\d+)/, 1]
+  end
 
-  # Term info
-  dates = noko.css('#session_date')
-  term_name = dates.xpath('../text()').text.tidy
-  term = {
-    id:     term_name[/^(\d+)/, 1],
-    name:   term_name,
-    source: url.to_s,
-  }
-  term[:start_date], term[:end_date] = dates.text.split(/\s+-\s*/, 2).map { |str| str.split('.').reverse.join('-') }
+  field :name do
+    dates.xpath('../text()').text.tidy
+  end
+
+  field :source do
+    url.to_s
+  end
+
+  field :start_date do
+    date_parts.first
+  end
+
+  field :end_date do
+    date_parts.last
+  end
+
+  field :members do
+    member_table.xpath('.//tr[td]').map do |tr|
+      fragment(tr => MemberRow).to_h
+    end
+  end
+
+  private
+
+  def dates
+    noko.css('#session_date')
+  end
+
+  def date_parts
+    dates.text.split(/\s+-\s*/, 2).map { |str| str.split('.').reverse.join('-') }
+  end
+
+  def member_table
+    noko.css('table.views-table')
+  end
+end
+
+class MemberRow < Scraped::HTML
+  decorator Scraped::Response::Decorator::CleanUrls
+
+  field :id do
+    '%s-%s' % [name.downcase.gsub(/[[:space:]]+/, '-'), first_seen]
+  end
+
+  field :name do
+    name_and_notes[0]
+  end
+
+  field :party do
+    tds[2].text.tidy.tr("'", '’') # Standardise; source has both
+  end
+
+  field :image do
+    tds[1].css('img/@src').text
+  end
+
+  field :notes do
+    name_and_notes[1]
+  end
+
+  field :source do
+    url.to_s
+  end
+
+  field :end_date do
+    notes_date if notes.to_s.include? 'Resigned on '
+  end
+
+  field :start_date do
+    notes_date if notes.to_s.include? 'NMP term effective '
+  end
+
+  private
+
+  def tds
+    noko.css('td')
+  end
+
+  def first_seen
+    tds[4].text.tidy[/^(\d+)/]
+  end
+
+  def name_and_notes
+    tds[1].text.split('(', 2).map(&:tidy)
+  end
+
+  def notes_date
+    Date.parse(notes).to_s rescue ''
+  end
+end
+
+def scraper(h)
+  url, klass = h.to_a.first
+  klass.new(response: Scraped::Request.new(url: url).response)
+end
+
+def term_data(url)
+  term = scraper(url => TermPage).to_h
+  members = term.delete(:members).map { |mem| mem.to_h.merge(term: term[:id]) }
+
   warn term[:name]
   ScraperWiki.save_sqlite([:id], term, 'terms')
 
-  # Members
-  noko.css('table.views-table').xpath('.//tr[td]').each do |tr|
-    tds = tr.css('td')
-    first_seen = tds[4].text.tidy[/^(\d+)/]
-    name, notes = tds[1].text.split('(', 2).map(&:tidy)
-    data = {
-      id:     '%s-%s' % [name.downcase.gsub(/[[:space:]]+/, '-'), first_seen],
-      name:   name,
-      party:  tds[2].text.tidy.tr("'", '’'), # Standardise; source has both
-      image:  tds[1].css('img/@src').text,
-      term:   term[:id],
-      notes:  notes,
-      source: url.to_s,
-    }
-    data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
-    data[:end_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'Resigned on '
-    data[:start_date] = date_from(data[:notes]) if data[:notes].to_s.include? 'NMP term effective '
+  members
+end
 
+START = 'http://www.parliament.gov.sg/history/1st-parliament'
+data = scraper(START => TermList).term_urls.flat_map { |url| term_data(url) }
+data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
+
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
+ScraperWiki.save_sqlite(%i[id term], members)
+
+__END__
+
+  if (0)
     # The start dates of NPMs are removed after the MP takes their seat.
     # That is, we once had these start dates but now we haven't.
     # Since the official source no longer publishes these dates,
@@ -79,11 +159,6 @@ def scrape_term(url)
       data[:start_date] = '2016-03-22'
       data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
     end
-
-    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
-    ScraperWiki.save_sqlite(%i[id term], data)
   end
-end
 
-ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
-scrape_list('http://www.parliament.gov.sg/history/1st-parliament')
+
