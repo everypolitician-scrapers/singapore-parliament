@@ -134,31 +134,19 @@ START = 'http://www.parliament.gov.sg/history/1st-parliament'
 data = scraper(START => TermList).term_urls.flat_map { |url| term_data(url) }
 data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
 
-ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
-ScraperWiki.save_sqlite(%i[id term], members)
-
-__END__
-
-  if (0)
-    # The start dates of NPMs are removed after the MP takes their seat.
-    # That is, we once had these start dates but now we haven't.
-    # Since the official source no longer publishes these dates,
-    # we're hardcoding them into the scraper.
-    term_13_nmps = %w[
-      azmoon-ahmad-13
-      chia-yong-yong-12
-      ganesh-rajaram-13
-      k-thanaletchimi-13
-      kok-heng-leun-13
-      kuik-shiao-yin-12
-      mahdev-mohan-13
-      randolph-tan-12
-      thomas-chua-kee-seng-12
-    ]
-    if term[:id] == '13' && term_13_nmps.include?(data[:id])
-      data[:start_date] = '2016-03-22'
-      data[:party] = 'Nominated Member of Parliament' if data[:party].to_s.empty?
-    end
+# The start dates of NPMs are removed after the MP takes their seat.
+# Since the official source no longer publishes these dates,
+# we're hardcoding the dates we once knew back into the scraper.
+%w[
+  azmoon-ahmad-13 chia-yong-yong-12 ganesh-rajaram-13
+  k-thanaletchimi-13 kok-heng-leun-13 kuik-shiao-yin-12
+  mahdev-mohan-13 randolph-tan-12 thomas-chua-kee-seng-12
+].each do |id|
+  data.select { |mem| mem[:id] == id && mem[:term] == '13' }.each do |mem|
+    mem[:start_date] = '2016-03-22'
+    mem[:party] = 'Nominated Member of Parliament' if mem[:party].to_s.empty?
   end
+end
 
-
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
+ScraperWiki.save_sqlite(%i[id term], data)
