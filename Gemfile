@@ -6,6 +6,7 @@ ruby '2.3.3'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 
+gem 'combine_popolo_memberships', github: 'everypolitician/combine_popolo_memberships'
 gem 'execjs'
 gem 'minitest'
 gem 'minitest-around'
@@ -24,3 +25,5 @@ gem 'scraperwiki', github: 'openaustralia/scraperwiki-ruby',
 gem 'table_unspanner', github: 'everypolitician/table_unspanner'
 gem 'vcr'
 gem 'webmock'
+gem 'wikidata-fetcher', github: 'everypolitician/wikidata-fetcher'
+gem 'wikidata_ids_decorator', github: 'everypolitician/wikidata_ids_decorator'
